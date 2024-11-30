@@ -1,0 +1,40 @@
+{
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:AoCScaffold}",
+            "name": "Debug AoCScaffold",
+            "program": "${workspaceFolder:AoCScaffold}/.build/debug/AoCScaffold",
+            "preLaunchTask": "swift: Build Debug AoCScaffold"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:AoCScaffold}",
+            "name": "Release AoCScaffold",
+            "program": "${workspaceFolder:AoCScaffold}/.build/release/AoCScaffold",
+            "preLaunchTask": "swift: Build Release AoCScaffold"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:AoCScaffold}",
+            "name": "Debug aoc",
+            "program": "${workspaceFolder:AoCScaffold}/.build/debug/aoc",
+            "preLaunchTask": "swift: Build Debug aoc"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:AoCScaffold}",
+            "name": "Release aoc",
+            "program": "${workspaceFolder:AoCScaffold}/.build/release/aoc",
+            "preLaunchTask": "swift: Build Release aoc"
+        }
+    ]
+}
