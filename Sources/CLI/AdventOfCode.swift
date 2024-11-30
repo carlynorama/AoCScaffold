@@ -31,7 +31,9 @@ struct AdventOfCodeConfig: Decodable, Sendable {
     // }
 
     static func main() async throws {
-        print("hello world")
+        let script = CommandLine.arguments[0]
+        print("Script Being Run:", script)
+
         let result = try await getConfigValues()
         print(result.year)
         print(result.code_folder)
@@ -40,22 +42,27 @@ struct AdventOfCodeConfig: Decodable, Sendable {
         print(await fileService.cleanBashFileInput(result.code_folder))
         print(await fileService.cleanBashFileInput(result.data_folder))
         /// the very first element is the current script
-let script = CommandLine.arguments[0]
-print("Script:", script)
 
-/// you can get the input arguments by dropping the first element
-let inputArgs = CommandLine.arguments.dropFirst()
-print("Number of arguments:", inputArgs.count)
 
-print("Arguments:")
-for arg in inputArgs {
-    print("-", arg)
-}
 
-/// reading lines from the standard input
-print("Please enter your input:")
-guard let input = readLine(strippingNewline: true) else {
-    fatalError("Missing input")
-}
+        /// you can get the input arguments by dropping the first element
+        let inputArgs = CommandLine.arguments.dropFirst()
+        print("Number of arguments:", inputArgs.count)
+
+        print("Arguments:")
+        for arg in inputArgs {
+            print("-", arg)
+        }
+
+        try await makeDay(3, config:result)
+        
+
+        /// reading lines from the standard input
+        // print("Please enter your input:")
+        // guard let input = readLine(strippingNewline: true) else {
+        //     fatalError("Missing input")
+        // }
     }
+
+
 }

@@ -22,8 +22,18 @@ actor FileService {
     }
 
     @discardableResult
-    public func touch(_ url: URL) -> Bool {
-        fileManager.createFile(atPath: url.path, contents: nil)
+    public func touch(_ url: URL) throws -> Bool {
+        let result = fileManager.createFile(atPath: url.path, contents: nil)
+        if !result {
+            let dir = url.deletingLastPathComponent()
+            try fileManager.createDirectory(
+            atPath: dir.path(),
+            withIntermediateDirectories: true)
+            let tryAgain = fileManager.createFile(atPath: url.path, contents: nil)
+            return tryAgain
+        } else {
+            return result
+        }
     }
 
     public func createDirectory(string: String, withSubs: Bool) throws {
@@ -68,7 +78,7 @@ actor FileService {
             return URL(filePath: string)
         } else {
             let url = URL(filePath: string)
-            touch(url)
+            try touch(url)
             return url
         }
     }
