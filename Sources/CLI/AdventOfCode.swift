@@ -3,6 +3,7 @@
 
 import PklSwift
 import Foundation
+import FileWrangler
 
 struct AdventOfCodeConfig: Decodable, Sendable {
     let year: Int
@@ -44,25 +45,29 @@ struct AdventOfCodeConfig: Decodable, Sendable {
         /// the very first element is the current script
 
 
-
         /// you can get the input arguments by dropping the first element
-        let inputArgs = CommandLine.arguments.dropFirst()
+        let inputArgs = Array(CommandLine.arguments.dropFirst())
         print("Number of arguments:", inputArgs.count)
 
+        print(inputArgs)
         print("Arguments:")
         for arg in inputArgs {
             print("-", arg)
         }
 
-        try await makeDay(3, config:result)
-        
+        if inputArgs.count == 2 {
+             let arg = inputArgs[0]
+             let day = Int(inputArgs[1])!
+            switch arg {
+                case "make": 
+                    try await makeDay(day, config:result)
+                case "data": 
+                    try await makeDataWrap(day, config:result)
+            default:    
+            print("did not recognize input")
 
-        /// reading lines from the standard input
-        // print("Please enter your input:")
-        // guard let input = readLine(strippingNewline: true) else {
-        //     fatalError("Missing input")
-        // }
+             }
+        }
     }
-
-
 }
+

@@ -1,3 +1,3 @@
-year: Int = 2023
-code_folder: String = "/Users/$USER/Developer/AdventOfCode/AdventOfCode2023_Public"
-data_folder: String = "/Users/$USER/Developer/AdventOfCode/AdventOfCode2023_Private"
+year: Int = 2024
+code_folder: String = "/Users/$USER/Developer/AdventOfCode/AdventOfCode2024_Public"
+data_folder: String = "/Users/$USER/Developer/AdventOfCode/AdventOfCode2024_Private"

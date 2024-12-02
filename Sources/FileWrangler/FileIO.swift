@@ -7,10 +7,12 @@
 
 import Foundation
 
-actor FileService {
+public actor FileService {
     let fileManager = FileManager.default
 
-    //------------------------------------------------- STATIC
+    public init() {}
+
+
     // public func fileExists(_ string: String) -> Bool {
     //     fileManager.fileExists(atPath: string)
     //     let x = fileManager.attributeKeys
@@ -95,7 +97,7 @@ actor FileService {
 
     //look for $USER 
     //TODO: $HOME, ~
-    func cleanBashFileInput(_ input: some StringProtocol) -> String {
+    public func cleanBashFileInput(_ input: some StringProtocol) -> String {
         input.replacingOccurrences(of: "$USER", with: currentUserString())
     }
 

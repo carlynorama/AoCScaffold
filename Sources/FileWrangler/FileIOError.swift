@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum FileIOError: Error {
+public enum FileIOError: Error {
   case unknownError(_ message: String)
   case fileAttributeUnavailable(_ attributeName: String)
   case noFileAtURL(_ urlString: String)

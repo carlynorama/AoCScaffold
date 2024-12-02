@@ -9,6 +9,7 @@ let package = Package(
         .macOS(.v14)
     ],
     products: [
+        .library(name: "FileWrangler", targets: ["FileWrangler"]),
         .executable(name: "aoc", targets: ["CLI"])
     ],
     dependencies: [
@@ -18,11 +19,13 @@ let package = Package(
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
+        .target(name: "FileWrangler"),
         .executableTarget(
             name: "CLI",
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
-                .product(name: "PklSwift", package: "pkl-swift")
+                .product(name: "PklSwift", package: "pkl-swift"),
+                "FileWrangler"
             ]
         )
     ]
