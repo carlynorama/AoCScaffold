@@ -13,23 +13,13 @@ struct AdventOfCodeConfig: Decodable, Sendable {
 
 @main struct AdventOfCode {
     static let fileService = FileService()
+    static let httpService = HTTPRequestService(asUserAgent: "Simple Swift AoC Tool by carlynorama.com as part of github.com/carlynorama/AoCScaffold")
 
     nonisolated static func getConfigValues() async throws -> AdventOfCodeConfig  {
         try await withEvaluator { evaluator in
             try await evaluator.evaluateModule(source: .path("config.pkl"), as: AdventOfCodeConfig.self)
         }
     }
-
-    // static func downloadInput(config: AdventOfCodeConfig, day:Int) async throws -> String {
-    //     let inputString = "https://adventofcode.com/\(config.year)/day/\(day)/input"
-    //     guard let inputURL = URL(string: inputString) else {
-    //         throw AdventOfCodeError.runtimeError("couldn't make url")
-    //     }
-    //     let data = try Data(contentsOf: inputURL)
-    //     //let outputString = FileIO.makeFileURL(string: )
-    //     //data.write(to: URL)
-
-    // }
 
     static func main() async throws {
         let script = CommandLine.arguments[0]
@@ -63,11 +53,26 @@ struct AdventOfCodeConfig: Decodable, Sendable {
                     try await makeDay(day, config:result)
                 case "data": 
                     try await makeDataWrap(day, config:result)
+                case "fetch": 
+                    try await fetchData(day, config: result)
             default:    
             print("did not recognize input")
 
              }
         }
+    }
+
+    static nonisolated func dayBaseRemote(_ day:Int, config: AdventOfCodeConfig) async throws -> URL {
+        let fetchLocation = "https://adventofcode.com/\(config.year)/day/\(day)"
+        guard let remoteURL = URL(string: fetchLocation) else {
+            throw AdventOfCodeError.runtimeError("couldn't make url from: \(fetchLocation)")
+        }
+        return remoteURL
+    }
+
+    static nonisolated func dayBasePrivateLocal(_ day:Int, config: AdventOfCodeConfig) async throws -> URL {
+        let baseDataFolder = URL(fileURLWithPath: await fileService.cleanBashFileInput(config.data_folder))
+        return baseDataFolder.appending(component: (String(format:"%02d", day))) 
     }
 }
 

@@ -22,14 +22,12 @@ extension AdventOfCode {
             """
             """#
 
-            let wrappedFile = await rawDataFile.deletingLastPathComponent().appending(component:wrappedFileName)
+            let wrappedFile = rawDataFile.deletingLastPathComponent().appending(component:wrappedFileName)
             try await fileService.touch(wrappedFile)
             let fileHandle = try FileHandle(forWritingTo: wrappedFile)
             fileHandle.write(prefix.data(using: .utf8)!)
             fileHandle.write(try Data(contentsOf: rawDataFile))
             fileHandle.write(suffix.data(using: .utf8)!)
-
-
         }
 
 
