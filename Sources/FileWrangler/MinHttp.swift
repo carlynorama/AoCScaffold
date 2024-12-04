@@ -82,8 +82,13 @@ extension HTTPRequestService {
         }
     }
 
-    public func cookiePolicy() -> HTTPCookie.AcceptPolicy{
+    //0 is always. 1 is never.
+    public var cookiePolicy:HTTPCookie.AcceptPolicy{
         cookieStorage.cookieAcceptPolicy
+    }
+
+    public func setCookiePolicy(newPolicy: HTTPCookie.AcceptPolicy) {
+        cookieStorage.cookieAcceptPolicy = newPolicy
     }
     
     public func setCookie(_ cookie: HTTPCookie) {
