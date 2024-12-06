@@ -63,5 +63,31 @@ extension AdventOfCode {
         try pageData.write(to: dataFileURL)
     }
 
+    static nonisolated func fetchStory(_ day:Int, config: AdventOfCodeConfig) async throws {
+
+        let baseRemoteURL = try await dayBaseRemote(day, config: config)
+        let storyURL = baseRemoteURL
+
+        // var inputRequest = URLRequest(url: dataURL)
+        let retrieved_cookie = httpService.readCookie(forURL: storyURL)
+        if retrieved_cookie.isEmpty {
+            //TODO: zot the cookies and run it again. 
+            //when this worked the cookie policy was set to never. i.e. 1, always is 0
+            //print(httpService.cookiePolicy().rawValue)
+            let cookie = try await createCookie()
+            print(cookie)
+            httpService.setCookie(cookie)
+        }
+        
+        //let pageData = try Data(contentsOf: dataURL)
+        let pageData = try await httpService.fetchData(from: storyURL)
+
+        let baseLocal = try await dayBasePrivateLocal(day, config: config)
+        let dataFileURL = baseLocal.appending(component: "data.txt")
+        //var result = try await fileService.touch(dataFileURL)
+        
+        try pageData.write(to: dataFileURL)
+    }
+
 
 }
